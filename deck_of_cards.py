@@ -81,7 +81,6 @@ class Deck:
             v = int(input("Enter a number from 1 to 13 (1 = Ace, 11 = Jack, 12 = Queen, 13 = King): ")) # Collect user info for value
             if s in [1, 2, 3, 4] and v in [x for x in range(1, 14)]:
                 card = self._Card(suits[s - 1], v)
-                print(card)  #TODO Remove this; only here for debugging.
                 break
             print("Invalid card, try again") # If invalid try again
         return card
