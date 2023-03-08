@@ -1,13 +1,13 @@
 from random import shuffle as s
 
 
+suits = ["Diamonds", "Clubs", "Hearts", "Spades"]
 
 class Deck:
-    _suits = ["Diamonds", "Clubs", "Hearts", "Spades"]
 
     def __init__(self):
         cards = []
-        for s in self._suits:  # Fill the deck with standard playing cards
+        for s in suits:  # Fill the deck with standard playing cards
             for val in range(1, 14):
                 cards.append(self._Card(s, val))
         self.cards = cards
@@ -28,7 +28,15 @@ class Deck:
         pass
 
     def sort(self):  #TODO Implement a method to sort cards by suit and value;
-        pass
+        unordered_list = self.cards
+        iteration_number = len(unordered_list) - 1
+        for i in range(iteration_number, 0, -1):
+            for j in range(i):
+                if unordered_list[j].value > unordered_list[j + 1].value \
+                        or ( unordered_list[j].value == unordered_list[j + 1].value and unordered_list[j].suit_name > unordered_list[j + 1].suit_name):
+                    temp = unordered_list[j]
+                    unordered_list[j] = unordered_list[j + 1]
+                    unordered_list[j + 1] = temp
 
 
     def shuffle(self):  # Method to put cards list in random order
@@ -42,14 +50,14 @@ class Deck:
         print("What suit is the card?")  # Pick a suit
         prompt = ""
         i = 1
-        for suit in self._suits: # Build prompt to pick suit
+        for suit in suits: # Build prompt to pick suit
             prompt +='{}. {}\n'.format(i, suit)
             i += 1
         while True:
             s = int(input(prompt)) # Collect user info for suit
             v = int(input("Enter a number from 1 to 13 (1 = Ace, 11 = Jack, 12 = Queen, 13 = King): ")) # Collect user info for value
             if s in [1, 2, 3, 4] and v in [x for x in range(1, 14)]:
-                card = self._Card(self._suits[s - 1], v)
+                card = self._Card(suits[s - 1], v)
                 print(card)  #TODO Remove this; only here for debugging.
                 break
             print("Invalid card, try again") # If invalid try again
@@ -73,13 +81,13 @@ class Deck:
 
         @property # Get proper suit name
         def suit_name(self):
-            if self.suit == _suits[0]:
+            if self.suit == suits[0]:
                 return 0
-            elif self.suit == _suits[1]:
+            elif self.suit == suits[1]:
                 return 1
-            elif self.suit == _suits[2]:
+            elif self.suit == suits[2]:
                 return 2
-            elif self.suit == _suits[3]:
+            elif self.suit == suits[3]:
                 return 3
             else:
                 raise ValueError()
