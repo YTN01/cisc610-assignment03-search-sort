@@ -25,7 +25,7 @@ class Deck:
 
     @property  #TODO Implement a method to determine if the cards are sorted; ✅
     def is_sorted(self):
-        for i in range(13 * 4 - 1):
+        for i in range(len(self.cards) - 1):
             current_card = self.cards[i]
             next_card = self.cards[i + 1]
             if (current_card.value == next_card.value and current_card.suit_name + 1 == next_card.suit_name) \
@@ -55,8 +55,12 @@ class Deck:
         shuffled_deck = s(self.cards)
         return shuffled_deck
 
-    def search(self):  #TODO Implement a public search method;
-        card = self._describe_card()
+    def search(self, suit, value):  #TODO Implement a public search method; ✅
+        for i in range(len(self.cards)):
+            current_card = self.cards[i]
+            if current_card.value == value and current_card.suit_name == suit:
+                return i
+        return -1
 
     def _describe_card(self): # User facing private function to create a card to search for
         print("What suit is the card?")  # Pick a suit
