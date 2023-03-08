@@ -23,17 +23,29 @@ class Deck:
     def size(self):
         return len(self.cards)
 
-    @property  #TODO Implement a method to determine if the cards are sorted;
+    @property  #TODO Implement a method to determine if the cards are sorted; ✅
     def is_sorted(self):
-        pass
+        for i in range(13 * 4 - 1):
+            current_card = self.cards[i]
+            next_card = self.cards[i + 1]
+            if (current_card.value == next_card.value and current_card.suit_name + 1 == next_card.suit_name) \
+                    or (current_card.suit_name == 3 and next_card.suit_name == 0):
+                continue
+            else:
+                return False
+        return True
 
-    def sort(self):  #TODO Implement a method to sort cards by suit and value;
+
+
+    def sort(self):  #TODO Implement a method to sort cards by suit and value; ✅
+        # Using bubble sort;
         unordered_list = self.cards
         iteration_number = len(unordered_list) - 1
         for i in range(iteration_number, 0, -1):
             for j in range(i):
                 if unordered_list[j].value > unordered_list[j + 1].value \
-                        or ( unordered_list[j].value == unordered_list[j + 1].value and unordered_list[j].suit_name > unordered_list[j + 1].suit_name):
+                        or (unordered_list[j].value == unordered_list[j + 1].value
+                            and unordered_list[j].suit_name > unordered_list[j + 1].suit_name):
                     temp = unordered_list[j]
                     unordered_list[j] = unordered_list[j + 1]
                     unordered_list[j + 1] = temp
@@ -45,7 +57,7 @@ class Deck:
 
     def search(self):  #TODO Implement a public search method;
         card = self._describe_card()
-    
+
     def _describe_card(self): # User facing private function to create a card to search for
         print("What suit is the card?")  # Pick a suit
         prompt = ""
@@ -62,7 +74,7 @@ class Deck:
                 break
             print("Invalid card, try again") # If invalid try again
         return card
-                
+
 
     class _Card: # Private inner class to create a Card
         def __init__(self, suit, value): # Need a suit and a value. Will be two integers. 0-3 for suit and 1-13 for value
@@ -91,7 +103,7 @@ class Deck:
                 return 3
             else:
                 raise ValueError()
-        
+
         @property # Get proper value name
         def value_name(self):
             if self.value == 1:
@@ -112,6 +124,6 @@ class Deck:
 if __name__ == '__main__':  # Main method
     deck = Deck()  # Create empty Deck object
 
-    
+
     deck.shuffle()
     deck.search()
