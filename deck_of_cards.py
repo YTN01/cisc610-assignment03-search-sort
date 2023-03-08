@@ -15,8 +15,8 @@ class Deck:
     def __iter__(self):
         return self.cards.__iter__()
 
-    def __str__(self):  #TODO Fix this to state whether or not the deck is sorted or shuffled;
-        return 'A deck of {self.size} cards'.format(self=self)
+    def __str__(self):  #TODO Fix this to state whether or not the deck is sorted or shuffled; ✅
+        return 'A deck of {0} {1} cards'.format(self.size, 'sorted' if self.is_sorted else 'shuffled')
 
 
     @property  # Property to get the length of the cards list
@@ -55,7 +55,14 @@ class Deck:
         shuffled_deck = s(self.cards)
         return shuffled_deck
 
-    def search(self, suit, value):  #TODO Implement a public search method; ✅
+    # A constant time search can be achieved by maintaining a separate array of integers representing card orders
+    # the sorted state is where the deck is in its natural sorted order, & the 'order' array's values will be 0, 1, 2, ... 52
+    # when shuffling, we alter the ordering of the 'order' array
+    # when enumerating the shuffled list, we'll be getting the cards in the order represented by 'order' array:
+        # deck.cards[order[index]]
+    # when searching, index of an element we simply return
+        # order[card's natural order index]
+    def search(self, value, suit):  #TODO Implement a public search method; ✅
         for i in range(len(self.cards)):
             current_card = self.cards[i]
             if current_card.value == value and current_card.suit_name == suit:
@@ -130,4 +137,4 @@ if __name__ == '__main__':  # Main method
 
 
     deck.shuffle()
-    deck.search()
+    deck.search(1, 2)
